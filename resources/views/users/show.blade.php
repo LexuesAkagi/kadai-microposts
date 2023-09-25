@@ -6,5 +6,9 @@
             {{-- ユーザ情報 --}}
             @include('users.card')
         </aside>
+        <div class="sm:col-span-2 mt-4">
+            @include('microposts.form')
+            @include('microposts.microposts')
+        </div>
     </div>
 @endsection
