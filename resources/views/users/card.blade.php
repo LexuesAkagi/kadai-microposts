@@ -7,3 +7,4 @@
         <img src="{{ Gravatar::get($user->email, ['size' => 500]) }}" alt="">
     </figure>
 </div>
+@include('user_follow.follow_button')

@@ -1,26 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;                        // 追加
 use App\Models\User;                                        // 追加
 
 class UsersController extends Controller
 {
-    public function index()                                 // 追加       
-    {                                                       // 追加
-        // ユーザ一覧をidの降順で取得
-        $users = User::orderBy('id', 'desc')->paginate(10); // 追加
-
-        // ユーザ一覧ビューでそれを表示
-        return view('users.index', [                        // 追加
-            'users' => $users,                              // 追加
-        ]);                                                 // 追加
-    }                                                       // 追加
+    public function index()      
+    { 
+        $users = User::orderBy('id', 'desc')->paginate(10);
+        return view('users.index', [
+            'users' => $users,
+        ]);
+    }
     
-    public function show($id)                               // 追加
+    public function show($id)
     {
         $user = User::findOrFail($id);
         $user->loadRelationshipCounts();
@@ -30,5 +25,28 @@ class UsersController extends Controller
             'user' => $user,
             'microposts' => $microposts,
         ]);
+    }
+    
+    public function followings($id)
+    {
+        $user = User::findOrFail($id);
+        $user->loadRelationshipCounts();
+        $followings = $user->followings()->paginate(10);
+        
+        return view('users.followings',[
+            'user' => $user,
+            'users' => $followings,
+            ]);
+    }
+    public function followers($id)
+    {
+        $user = User::findOrFail($id);
+        $user->loadRelationshipCounts();
+        $followers = $user->followers()->paginate(10);
+        
+        return view('users.followers',[
+            'user' => $user,
+            'users' => $followers,
+            ]);
     }
 }
