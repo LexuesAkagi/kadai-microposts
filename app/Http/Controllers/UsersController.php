@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;                        // 追加
-use App\Models\User;                                        // 追加
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+
 
 class UsersController extends Controller
 {
@@ -32,7 +33,6 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
         $user->loadRelationshipCounts();
         $followings = $user->followings()->paginate(10);
-        
         return view('users.followings',[
             'user' => $user,
             'users' => $followings,
@@ -49,4 +49,19 @@ class UsersController extends Controller
             'users' => $followers,
             ]);
     }
+    
+    
+    public function favorites($id)
+    {
+        $user = User::findOrFail($id);
+        $user->loadRelationshipCounts();
+        $microposts = $user->favorites()->paginate(10);
+        
+        return view('users.favorites', [
+            'user' => $user,
+            'microposts' => $microposts
+        ]);
+    }
+    
+    
 }

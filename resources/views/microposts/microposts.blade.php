@@ -29,8 +29,10 @@
                                         onclick="return confirm('Delete id = {{ $micropost->id }} ?')">Delete</button>
                                 </form>
                             @endif
+                            
                         </div>
                     </div>
+                    @include('favorites.favorites_button')
                 </li>
             @endforeach
         </ul>
